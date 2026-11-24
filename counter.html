@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Counter and Calculator</title>
+
+    <!-- React CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f0f2f5;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+        }
+
+        .box {
+            background: white;
+            padding: 25px;
+            margin: 20px auto;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px #ccc;
+        }
+
+        h1 {
+            color: #222;
+        }
+
+        h2 {
+            color: #2563eb;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            margin: 5px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        input {
+            padding: 12px;
+            margin: 10px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        .result {
+            font-size: 22px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        const { useState } = React;
+
+        function App() {
+
+            // Counter State
+            const [count, setCount] = useState(0);
+
+            // Calculator State
+            const [num1, setNum1] = useState("");
+            const [num2, setNum2] = useState("");
+            const [result, setResult] = useState("");
+
+            // Calculator Function
+            function calculate(operator) {
+
+                if (num1 === "" || num2 === "") {
+                    setResult("Enter both numbers");
+                    return;
+                }
+
+                let a = Number(num1);
+                let b = Number(num2);
+
+                if (operator === "+") {
+                    setResult(a + b);
+                }
+                else if (operator === "-") {
+                    setResult(a - b);
+                }
+                else if (operator === "*") {
+                    setResult(a * b);
+                }
+                else if (operator === "/") {
+                    if (b === 0) {
+                        setResult("Cannot divide by zero");
+                    } else {
+                        setResult(a / b);
+                    }
+                }
+            }
+
+            return (
+
+                <div className="container">
+
+                    <h1>Counter and Calculator</h1>
+
+                    {/* Counter */}
+
+                    <div className="box">
+
+                        <h2>Counter</h2>
+
+                        <h1>{count}</h1>
+
+                        <button onClick={() => setCount(count + 1)}>
+                            Increment
+                        </button>
+
+                        <button onClick={() => setCount(count - 1)}>
+                            Decrement
+                        </button>
+
+                        <button onClick={() => setCount(0)}>
+                            Reset
+                        </button>
+
+                    </div>
+
+                    {/* Calculator */}
+
+                    <div className="box">
+
+                        <h2>Calculator</h2>
+
+                        <input
+                            type="number"
+                            placeholder="Enter first number"
+                            value={num1}
+                            onChange={(e) => setNum1(e.target.value)}
+                        />
+
+                        <input
+                            type="number"
+                            placeholder="Enter second number"
+                            value={num2}
+                            onChange={(e) => setNum2(e.target.value)}
+                        />
+
+                        <br />
+
+                        <button onClick={() => calculate("+")}>+</button>
+
+                        <button onClick={() => calculate("-")}>-</button>
+
+                        <button onClick={() => calculate("*")}>*</button>
+
+                        <button onClick={() => calculate("/")}>/</button>
+
+                        <p className="result">
+                            Result: {result}
+                        </p>
+
+                    </div>
+
+                </div>
+
+            );
+        }
+
+        // Display React App
+        ReactDOM.createRoot(
+            document.getElementById("root")
+        ).render(<App />);
+
+    </script>
+
+</body>
+</html>
